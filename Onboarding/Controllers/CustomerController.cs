@@ -12,8 +12,53 @@ namespace CobraOnboarding.Controllers
         // GET: Customer
         public ActionResult Index()
         {
-            var customers = CustomerDb.GetAllCustomers();
-            return Json(customers);
+            return View();
         }
+
+        public ActionResult GetCustomers()
+        {
+            using (var context = new CobraOnboardingDbEntities())
+            {
+                context.Configuration.LazyLoadingEnabled = false;
+                var customers = context.People.ToList();
+                return Json(customers, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
+        public ActionResult InsertCustomers(Person person)
+        {
+            using (var context = new CobraOnboardingDbEntities())
+            {
+                context.Configuration.LazyLoadingEnabled = false;
+
+                context.People.Add(person);
+                context.SaveChanges();
+                var customers = context.People.ToList();
+                return Json(customers, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public ActionResult DeleteOneCustomer(Person person)
+        {
+            using (var context = new CobraOnboardingDbEntities())
+            {
+                context.Configuration.LazyLoadingEnabled = false;
+
+                var personInDb = context.People.SingleOrDefault(x => x.Id == person.Id);
+
+                if (personInDb != null)
+                {
+                    context.People.Remove(personInDb);
+                }
+
+                context.SaveChanges();
+                var customers = context.People.ToList();
+                return Json(customers, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
+
     }
 }
