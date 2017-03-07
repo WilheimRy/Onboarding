@@ -1,7 +1,8 @@
 ﻿
 
 onboard_app.controller("Customer", function ($scope, $http, $uibModal) {
-    $http.get("customer/GetCustomers")
+
+    $http.get("/customer/GetCustomers")
                      .then(function (response) {
                          $scope.customers = response.data;
                      });
@@ -18,8 +19,7 @@ onboard_app.controller("Customer", function ($scope, $http, $uibModal) {
 
         //to display the results
         modalInstance.result.then(function (customer) {
-            debugger;
-            $http.post("customer/InsertCustomers", customer)
+            $http.post("/customer/InsertCustomers", customer)
                      .then(function (response) {
                          $scope.customers = response.data;
                      });
@@ -47,12 +47,12 @@ onboard_app.controller("Customer", function ($scope, $http, $uibModal) {
         modalInstance.result.then(function (customer) {
 
             if (customer != null) {
-                $http.post("customer/UpdateOneCustomer", customer)
+                $http.post("/customer/UpdateOneCustomer", customer)
                      .then(function (response) {
                          $scope.customers = response.data;
                      });
             } else {
-                $http.get("customer/GetCustomers")
+                $http.get("/customer/GetCustomers")
                      .then(function (response) {
                          $scope.customers = response.data;
                      });
@@ -81,12 +81,12 @@ onboard_app.controller("Customer", function ($scope, $http, $uibModal) {
         modalInstance.result.then(function (customer) {
 
             if (customer != null) {
-                $http.post("customer/DeleteOneCustomer", customer)
+                $http.post("/customer/DeleteOneCustomer", customer)
                      .then(function (response) {
                          $scope.customers = response.data;
                      });
             } else {
-                $http.get("customer/GetCustomers")
+                $http.get("/customer/GetCustomers")
                      .then(function (response) {
                          $scope.customers = response.data;
                      });

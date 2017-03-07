@@ -1,17 +1,10 @@
 ﻿
 
 
-onboard_app.factory('orderDateFactory', function () {
-    return {
-        date: ""
-    }
-});
-
 
 onboard_app.controller('Order', function ($scope, $http, $uibModal) {
-
     // by default, get all data
-    $http.get("order/GetOrders")
+    $http.get("Order/GetOrders")
         .then(function (response) {
             var orders = response.data.orders;
             for (var i = 0; i < orders.length; i++) {

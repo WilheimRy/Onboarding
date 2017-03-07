@@ -10,7 +10,7 @@ namespace Onboarding.Controllers
     public class CustomerController : Controller
     {
         // GET: Customer
-        public ActionResult CustomerIndex()
+        public ActionResult Index()
         {
             return View();
         }

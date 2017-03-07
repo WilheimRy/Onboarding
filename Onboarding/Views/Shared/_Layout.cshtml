@@ -7,30 +7,30 @@
     <title>@ViewBag.Title </title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+@*    @Scripts.Render("~/bundles/js")*@
+
     <script src="~/Content/scripts/angular1.6.1.js"></script>
     <script src="~/Content/scripts/angular-animate1.6.1.js"></script>
     <script src="~/Content/scripts/angular-sanitize1.6.1.js"></script>
     <script src="~/Content/scripts/ui-bootstrap-tpls-2.5.0.js"></script>
     @Scripts.Render("~/bundles/angularControllers")
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/js")
-
-
 
 
 
 
 </head>
-<body ng-app="onboard-app">
+<body >
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <a class="navbar-brand" href="#">Onboarding</a>
             </div>
             <ul class="nav navbar-nav">
-                <li class="active"><a href="@Url.Action("customerIndex","Customer")">Customer Admin</a></li>
-                <li><a href="@Url.Action("OrderIndex","Order")">Order Admin</a></li>
+                <li class="active">@Html.ActionLink("Customer", "Index", "Customer")</li>
+                <li>@Html.ActionLink("Order","OrderIndex","Order")</li>
             </ul>
         </div>
     </nav>

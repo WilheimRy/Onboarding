@@ -27,6 +27,7 @@ namespace Onboarding
 //
            bundles.Add(new ScriptBundle("~/bundles/angularControllers").Include(
                 "~/AngularApp/app.js",
+                "~/AngularApp/service.js",
                        "~/AngularApp/CustomerControllers.js",
                        "~/AngularApp/OrderController.js"));
 
