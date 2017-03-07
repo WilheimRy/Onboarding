@@ -152,6 +152,7 @@
       <DependentUpon>CobraOnboardingDevEntities.edmx</DependentUpon>
     </Compile>
     <Compile Include="CustomerDb.cs" />
+    <Compile Include="OrderDb.cs" />
     <Compile Include="OrderDetail.cs">
       <DependentUpon>CobraOnboardingDevEntities.tt</DependentUpon>
     </Compile>

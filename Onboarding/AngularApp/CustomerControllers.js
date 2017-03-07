@@ -1,7 +1,6 @@
 ﻿
-var onboard_app = angular.module("onboard-app", ['ui.bootstrap']);
 
-onboard_app.controller('Customer', function ($scope, $http, $uibModal) {
+onboard_app.controller("Customer", function ($scope, $http, $uibModal) {
     $http.get("customer/GetCustomers")
                      .then(function (response) {
                          $scope.customers = response.data;
@@ -11,7 +10,7 @@ onboard_app.controller('Customer', function ($scope, $http, $uibModal) {
     $scope.openAdd = function () {
         var modalInstance = $uibModal.open({
             templateUrl: 'myModalContent',
-            controller: 'ModalInstanceAdd',
+            controller: 'ModalInstanceAddCustomer',
             resolve: {
 
             }
@@ -34,7 +33,7 @@ onboard_app.controller('Customer', function ($scope, $http, $uibModal) {
     $scope.openUpdate = function (customer) {
         var modalInstance = $uibModal.open({
             templateUrl: 'myModalContent',
-            controller: 'ModalInstanceUpdate',
+            controller: 'ModalInstanceUpdateCustomer',
             resolve: {
                 customer: function () {
                     return customer;
@@ -68,7 +67,7 @@ onboard_app.controller('Customer', function ($scope, $http, $uibModal) {
     $scope.openDelete = function (customer) {
         var modalInstance = $uibModal.open({
             templateUrl: 'deleteModal',
-            controller: 'ModalInstanceDelete',
+            controller: 'ModalInstanceDeleteCustomer',
             resolve: {
                 customer: function () {
                     return customer;
@@ -101,7 +100,7 @@ onboard_app.controller('Customer', function ($scope, $http, $uibModal) {
 });
 
 //add
-onboard_app.controller('ModalInstanceAdd', function ($uibModalInstance, $scope) {
+onboard_app.controller('ModalInstanceAddCustomer', function ($uibModalInstance, $scope) {
 
     $scope.title = "Add a new Customer";
     $scope.ok = function (customer) {
@@ -114,9 +113,9 @@ onboard_app.controller('ModalInstanceAdd', function ($uibModalInstance, $scope) 
 });
 
 //update
-onboard_app.controller('ModalInstanceUpdate', function ($uibModalInstance, $scope, customer) {
+onboard_app.controller('ModalInstanceUpdateCustomer', function ($uibModalInstance, $scope, customer) {
     $scope.customer = customer;
-    $scope.title = "Update a new Customer";
+    $scope.title = "Update a Customer";
     $scope.ok = function (customer) {
         $uibModalInstance.close(customer);
     };
@@ -127,7 +126,7 @@ onboard_app.controller('ModalInstanceUpdate', function ($uibModalInstance, $scop
 });
 
 //delete
-onboard_app.controller('ModalInstanceDelete', function ($uibModalInstance, $scope, customer) {
+onboard_app.controller('ModalInstanceDeleteCustomer', function ($uibModalInstance, $scope, customer) {
     $scope.customer = customer;
     $scope.title = "Delete Customer";
     $scope.ok = function (customer) {

@@ -26,11 +26,13 @@ namespace Onboarding
 //                       "~/Scripts/angular-ui/ui-bootstrap.js"));
 //
            bundles.Add(new ScriptBundle("~/bundles/angularControllers").Include(
-                "~/AngularApp/onboarding-login-app.js",
-                       "~/AngularApp/controllers.js"));
+                "~/AngularApp/app.js",
+                       "~/AngularApp/CustomerControllers.js",
+                       "~/AngularApp/OrderController.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/js").Include(
                 "~/Content/scripts/pop_up.js"));
+
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
@@ -38,7 +40,7 @@ namespace Onboarding
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css", "~/Content/css/OrderPage.css"));
 
 
         }

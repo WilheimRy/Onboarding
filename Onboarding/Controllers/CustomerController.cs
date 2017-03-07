@@ -5,12 +5,12 @@ using System.Web;
 using System.Web.Mvc;
 using CobraOnBoarding.DataAccess;
 
-namespace CobraOnboarding.Controllers
+namespace Onboarding.Controllers
 {
     public class CustomerController : Controller
     {
         // GET: Customer
-        public ActionResult Index()
+        public ActionResult CustomerIndex()
         {
             return View();
         }
@@ -38,6 +38,30 @@ namespace CobraOnboarding.Controllers
                 return Json(customers, JsonRequestBehavior.AllowGet);
             }
         }
+
+        public ActionResult UpdateOneCustomer(Person person)
+        {
+            using (var context = new CobraOnboardingDbEntities())
+            {
+                context.Configuration.LazyLoadingEnabled = false;
+
+                var personInDb = context.People.SingleOrDefault(x => x.Id == person.Id);
+
+                if (personInDb != null)
+                {
+                    personInDb.CustomerName = person.CustomerName;
+                    personInDb.Address1 = person.Address1;
+                    personInDb.Address2 = person.Address2;
+                    personInDb.Town_City = person.Town_City;
+                }
+
+                context.SaveChanges();
+                var customers = context.People.ToList();
+                return Json(customers, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
 
         public ActionResult DeleteOneCustomer(Person person)
         {

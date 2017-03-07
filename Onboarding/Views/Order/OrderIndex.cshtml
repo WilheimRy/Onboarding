@@ -1,0 +1,116 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Orders</h2>
+
+<div ng-controller="Order" class="order-container">
+
+    <script type="text/ng-template" id="myModalContent">
+        <div class="modal-header">
+            <h3 class="modal-title" id="modal-title" ng-model="title">{{title}}</h3>
+        </div>
+        <div class="modal-body" id="modal-body">
+            <form>
+                <div class="form-group row">
+                    <div class="col-md-2"><label for="name">OrderId</label></div>
+                    <div class="col-md-9"><label ng-model="order.OrderId">{{order.OrderId}}</label></div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-2"><label for="name">Date</label></div>
+                    <div ng-controller="DatepickerPopupDemoCtrl" class="col-md-9">
+                        <p class="input-group">
+                            <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-change="select(dt)" ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                        </p>
+                    </div>
+                </div>
+                <div class="row form-group ">
+                    <div class="col-md-2"><label for="name">Name</label></div>
+                    <div class="col-md-9">
+                        <select ng-model="order.CustomerName" ng-options="customer.CustomerName as customer.CustomerName for customer in customers"></select>
+                    </div>
+                </div>
+                <div class="row form-group ">
+                    <div class="col-md-2"><label for="name">Product</label></div>
+                    <div class="col-md-9">
+                        <select ng-model="order.ProductName" ng-change="updatePrice(order.ProductName)" ng-options="product.ProductName as product.ProductName for product in products "></select>
+                    </div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-2"><label for="name">Price</label></div>
+                    <div class="col-md-9"><label for="name" ng-model="order.Price">{{order.Price |currency:'$':2}}</label></div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-click="ok(order,dt)">OK</button>
+            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="deleteModal">
+        <div class="modal-header">
+            <h3 class="modal-title" id="modal-title" ng-model="title">{{title}}</h3>
+        </div>
+        <div class="modal-body" id="modal-body">
+            <form>
+                <div class="row form-group">
+                    <div class="col-md-2"><label for="name">OrderId</label></div>
+                    <div class="col-md-4"><label ng-model="order.OrderId">{{order.OrderId}}</label></div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-2"><label for="name">Date</label></div>
+                    <div class="col-md-4"><label ng-model="order.OrderDate">{{order.OrderDate | date:"dd/MM/yy"}}</label></div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-2"><label for="name">Name</label></div>
+                    <div class="col-md-4"><label ng-model="order.CustomerName">{{order.CustomerName}}</label></div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-2"><label for="name">Product</label></div>
+                    <div class="col-md-4"><label ng-model="order.ProductName">{{order.ProductName}}</label></div>
+                </div>
+                <div class="row form-group">
+                    <div class="col-md-2"><label for="name">Price</label></div>
+                    <div class="col-md-4"><label ng-model="order.Price">{{order.Price |currency:'$':2}}</label></div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-click="ok(order)">OK</button>
+            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
+
+    <button type="button" class="btn btn-primary" ng-click="openAddOneOrder()">Add</button>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>OrderId</th>
+                <th>Date</th>
+                <th>CustomerName</th>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="order in orders">
+                <td>{{order.OrderId}}</td>
+                <td>{{order.OrderDate | date:"dd/MM/yy"}}</td>
+                <td>{{order.CustomerName}}</td>
+                <td>{{order.ProductName}}</td>
+                <td>{{order.Price | currency:"$":2}}</td>
+                <td><a href="#" ng-click="openUpdateOneOrder(order)">[Edit]</a><br /><a href="#" ng-click="openDeleteOneOrder(order)">[Delete]</a></td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+

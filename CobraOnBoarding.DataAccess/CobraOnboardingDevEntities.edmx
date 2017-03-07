@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="CobraOnboardingDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="CobraOnboardingDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="OrderDetail">
           <Key>
             <PropertyRef Name="Id" />
@@ -26,7 +26,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="50" />
+          <Property Name="CustomerName" Type="varchar" MaxLength="50" />
           <Property Name="Address1" Type="varchar" MaxLength="255" />
           <Property Name="Address2" Type="varchar" MaxLength="255" />
           <Property Name="Town/City" Type="varchar" MaxLength="255" />
@@ -36,8 +36,8 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="100" />
-          <Property Name="Price" Type="int" />
+          <Property Name="ProductName" Type="varchar" MaxLength="100" />
+          <Property Name="Price" Type="numeric" Precision="18" Scale="1" />
         </EntityType>
         <Association Name="FK__OrderDeta__Order__276EDEB3">
           <End Role="OrderHeader" Type="Self.OrderHeader" Multiplicity="0..1" />
@@ -93,8 +93,7 @@
             <End Role="OrderHeader" EntitySet="OrderHeader" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="CobraOnboardingDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -106,7 +105,7 @@
           <Property Name="OrderId" Type="Int32" />
           <Property Name="ProductId" Type="Int32" />
           <NavigationProperty Name="OrderHeader" Relationship="Self.FK__OrderDeta__Order__276EDEB3" FromRole="OrderDetail" ToRole="OrderHeader" />
-          <NavigationProperty Name="Product" Relationship="Self.FK__OrderDeta__Produ__286302EC" FromRole="OrderDetail" ToRole="Product" />
+          <NavigationProperty Name="Product" Relationship="CobraOnboardingDbModel.FK__OrderDeta__Produ__286302EC" FromRole="OrderDetail" ToRole="Product" />
         </EntityType>
         <EntityType Name="OrderHeader">
           <Key>
@@ -116,27 +115,7 @@
           <Property Name="OrderDate" Type="DateTime" Precision="0" />
           <Property Name="PersonId" Type="Int32" />
           <NavigationProperty Name="OrderDetails" Relationship="Self.FK__OrderDeta__Order__276EDEB3" FromRole="OrderHeader" ToRole="OrderDetail" />
-          <NavigationProperty Name="Person" Relationship="Self.FK__OrderHead__Perso__1273C1CD" FromRole="OrderHeader" ToRole="Person" />
-        </EntityType>
-        <EntityType Name="Person">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Address1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="Address2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="Town_City" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="OrderHeaders" Relationship="Self.FK__OrderHead__Perso__1273C1CD" FromRole="Person" ToRole="OrderHeader" />
-        </EntityType>
-        <EntityType Name="Product">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Price" Type="Int32" />
-          <NavigationProperty Name="OrderDetails" Relationship="Self.FK__OrderDeta__Produ__286302EC" FromRole="Product" ToRole="OrderDetail" />
+          <NavigationProperty Name="Person" Relationship="CobraOnboardingDbModel.FK__OrderHead__Perso__1273C1CD" FromRole="OrderHeader" ToRole="Person" />
         </EntityType>
         <Association Name="FK__OrderDeta__Order__276EDEB3">
           <End Role="OrderHeader" Type="Self.OrderHeader" Multiplicity="0..1" />
@@ -150,9 +129,47 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityContainer Name="CobraOnboardingDbEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="OrderDetails" EntityType="Self.OrderDetail" />
+          <EntitySet Name="OrderHeaders" EntityType="Self.OrderHeader" />
+          <AssociationSet Name="FK__OrderDeta__Order__276EDEB3" Association="Self.FK__OrderDeta__Order__276EDEB3">
+            <End Role="OrderHeader" EntitySet="OrderHeaders" />
+            <End Role="OrderDetail" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <EntitySet Name="People" EntityType="CobraOnboardingDbModel.Person" />
+          <EntitySet Name="Products" EntityType="CobraOnboardingDbModel.Product" />
+          <AssociationSet Name="FK__OrderDeta__Produ__286302EC" Association="CobraOnboardingDbModel.FK__OrderDeta__Produ__286302EC">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="OrderDetail" EntitySet="OrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderHead__Perso__1273C1CD" Association="CobraOnboardingDbModel.FK__OrderHead__Perso__1273C1CD">
+            <End Role="Person" EntitySet="People" />
+            <End Role="OrderHeader" EntitySet="OrderHeaders" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Person">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Address1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Address2" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Town_City" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="OrderHeaders" Relationship="CobraOnboardingDbModel.FK__OrderHead__Perso__1273C1CD" FromRole="Person" ToRole="OrderHeader" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="1" />
+          <NavigationProperty Name="OrderDetails" Relationship="CobraOnboardingDbModel.FK__OrderDeta__Produ__286302EC" FromRole="Product" ToRole="OrderDetail" />
+        </EntityType>
         <Association Name="FK__OrderDeta__Produ__286302EC">
-          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
-          <End Role="OrderDetail" Type="Self.OrderDetail" Multiplicity="*" />
+          <End Type="CobraOnboardingDbModel.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="CobraOnboardingDbModel.OrderDetail" Role="OrderDetail" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Product">
               <PropertyRef Name="Id" />
@@ -163,8 +180,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__OrderHead__Perso__1273C1CD">
-          <End Role="Person" Type="Self.Person" Multiplicity="0..1" />
-          <End Role="OrderHeader" Type="Self.OrderHeader" Multiplicity="*" />
+          <End Type="CobraOnboardingDbModel.Person" Role="Person" Multiplicity="0..1" />
+          <End Type="CobraOnboardingDbModel.OrderHeader" Role="OrderHeader" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Person">
               <PropertyRef Name="Id" />
@@ -174,24 +191,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="CobraOnboardingDbEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="OrderDetails" EntityType="Self.OrderDetail" />
-          <EntitySet Name="OrderHeaders" EntityType="Self.OrderHeader" />
-          <EntitySet Name="People" EntityType="Self.Person" />
-          <EntitySet Name="Products" EntityType="Self.Product" />
-          <AssociationSet Name="FK__OrderDeta__Order__276EDEB3" Association="Self.FK__OrderDeta__Order__276EDEB3">
-            <End Role="OrderHeader" EntitySet="OrderHeaders" />
-            <End Role="OrderDetail" EntitySet="OrderDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK__OrderDeta__Produ__286302EC" Association="Self.FK__OrderDeta__Produ__286302EC">
-            <End Role="Product" EntitySet="Products" />
-            <End Role="OrderDetail" EntitySet="OrderDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK__OrderHead__Perso__1273C1CD" Association="Self.FK__OrderHead__Perso__1273C1CD">
-            <End Role="Person" EntitySet="People" />
-            <End Role="OrderHeader" EntitySet="OrderHeaders" />
-          </AssociationSet>
-        </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -219,20 +218,20 @@
           <EntitySetMapping Name="People">
             <EntityTypeMapping TypeName="CobraOnboardingDbModel.Person">
               <MappingFragment StoreEntitySet="Person">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Address1" ColumnName="Address1" />
-                <ScalarProperty Name="Address2" ColumnName="Address2" />
                 <ScalarProperty Name="Town_City" ColumnName="Town/City" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="CobraOnboardingDbModel.Product">
               <MappingFragment StoreEntitySet="Product">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

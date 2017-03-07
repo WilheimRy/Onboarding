@@ -198,15 +198,28 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\OrderViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="AngularApp\controllers.js" />
-    <Content Include="AngularApp\onboarding-login-app.js" />
+    <Content Include="AngularApp\app.js" />
+    <Content Include="AngularApp\CustomerControllers.js" />
+    <Content Include="AngularApp\OrderController.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\css\OrderPage.css" />
+    <Content Include="Content\less\OrderPage.css">
+      <DependentUpon>OrderPage.less</DependentUpon>
+    </Content>
+    <Content Include="Content\less\OrderPage.min.css">
+      <DependentUpon>OrderPage.css</DependentUpon>
+    </Content>
+    <Content Include="Content\scripts\angular-animate1.6.1.js" />
+    <Content Include="Content\scripts\angular-sanitize1.6.1.js" />
+    <Content Include="Content\scripts\angular1.6.1.js" />
     <Content Include="Content\scripts\pop_up.js" />
+    <Content Include="Content\scripts\ui-bootstrap-tpls-2.5.0.js" />
     <Content Include="Content\ui-bootstrap-csp.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -226,6 +239,11 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Scripts\angular.min.js.map" />
+    <Content Include="Content\less\OrderPage.less" />
+    <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </None>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -251,12 +269,11 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Customer\Index.cshtml" />
-    <Content Include="Views\Order\Index.cshtml" />
+    <Content Include="Views\Customer\CustomerIndex.cshtml" />
+    <Content Include="Views\Order\OrderIndex.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
